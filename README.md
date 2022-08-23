@@ -1,0 +1,2 @@
+# sc-fruit-slot-base
+
