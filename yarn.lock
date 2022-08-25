@@ -7671,6 +7671,18 @@ ramda@^0.28.0:
   resolved "http://npm.lumigame.com/ramda/-/ramda-0.28.0.tgz#acd785690100337e8b063cab3470019be427cc97"
   integrity sha512-9QnLuG/kPVgWvMQ4aODhsBUFKOUmnbUnsSXACv+NCQZcHbeb+v8Lodp8OVxtRULN1/xOyYLLaL6npE6dMq5QTA==
 
+random-js@^2.1.0:
+  version "2.1.0"
+  resolved "http://npm.lumigame.com/random-js/-/random-js-2.1.0.tgz#0c03238b0a4f701f7a4c7303036ade3083d8ee14"
+  integrity sha512-CRUyWmnzmZBA7RZSVGq0xMqmgCyPPxbiKNLFA5ud7KenojVX2s7Gv+V7eB52beKTPGxWRnVZ7D/tCIgYJJ8vNQ==
+
+random@^3.0.6:
+  version "3.0.6"
+  resolved "http://npm.lumigame.com/random/-/random-3.0.6.tgz#c918e9498dee461affde72986c79ac4d9ef486cf"
+  integrity sha512-B53pp/8eFBxULg6sfQgjjmy3vZ2CWVt0Nk4OgkSpvmAf3VXfcEUgGASbNWbXiTiExWe8hCIf5HlddNHzrte9jg==
+  dependencies:
+    seedrandom "^3.0.5"
+
 range-parser@~1.2.1:
   version "1.2.1"
   resolved "http://npm.lumigame.com/range-parser/-/range-parser-1.2.1.tgz#3cf37023d199e1c24d1a55b84800c2f3e6468031"
@@ -8125,7 +8137,7 @@ sc-common@1.8.1:
     mongoose-long "^0.3.0"
     numeral "^2.0.6"
 
-sc-game-base@3.0.6, sc-game-base@^2.6.1-beta.16:
+sc-game-base@3.0.2-beta.2, sc-game-base@3.0.6:
   version "3.0.6"
   resolved "http://npm.lumigame.com/sc-game-base/-/sc-game-base-3.0.6.tgz#2a1418ff36eb81f5d228552378b3d4845a36cbfe"
   integrity sha512-yqeWmj+bvg6bzjad/GGb90Bm65prU/OzVtQCy0ivSD5n1NqD+HPw8CbEPGpY9uZ84ltnZwBkesCRtz4xZrzd8A==
@@ -8149,14 +8161,14 @@ sc-game-base@3.0.6, sc-game-base@^2.6.1-beta.16:
     socket.io-msgpack-parser "^3.0.1"
     socket.io-prom-metrics "^1.0.3"
 
-sc-game-service-integration-utils@1.1.3-beta.0:
-  version "1.1.3-beta.0"
-  resolved "http://npm.lumigame.com/sc-game-service-integration-utils/-/sc-game-service-integration-utils-1.1.3-beta.0.tgz#abf8af4694e6e3efacdc5ca23783f08c6cea1171"
-  integrity sha512-IRtTWqrFIsxozkElFruEUkXXDQ0jf0RfE4uA9GFCLV5Q8OR+33DoFkXn6Ujy0A51ZV252Yrjmk4NBKuP7bFcMQ==
+sc-game-service-integration-utils@1.2.3-beta.2:
+  version "1.2.3-beta.2"
+  resolved "http://npm.lumigame.com/sc-game-service-integration-utils/-/sc-game-service-integration-utils-1.2.3-beta.2.tgz#2d334d29a1404bda390e9901b4a41f0c46717d62"
+  integrity sha512-0Q9UqPEjBAXBAtYfEOcveV8ovHnXrLMH0rjVSyxKcNEObcNJEeXFtv0fFc8MM3LrnVhlUDUht1zSlIv0HMbPLg==
   dependencies:
     lodash.matches "^4.6.0"
     nock "^13.2.1"
-    sc-game-base "^2.6.1-beta.16"
+    sc-game-base "3.0.2-beta.2"
     socket.io-client "^4.4.0"
 
 sc-semantic-release@^1.2.0:
@@ -8164,13 +8176,20 @@ sc-semantic-release@^1.2.0:
   resolved "http://npm.lumigame.com/sc-semantic-release/-/sc-semantic-release-1.2.0.tgz#52ea7bd1aa4d5c41315a16c2c4e4f0437befdbcb"
   integrity sha512-izZqZiS8hL05cGzYbcR3+GZ1Oktr9rU1nIL05S9mZnEBm5nZfqzRkSpR2OHVJARjYsMI5dps0oUX1HjFV9x47w==
 
-sc-slot-rng-generator@1.0.1-beta.0:
-  version "1.0.1-beta.0"
-  resolved "http://npm.lumigame.com/sc-slot-rng-generator/-/sc-slot-rng-generator-1.0.1-beta.0.tgz#b96b91e5ce40cd29f431970f3f741efa9856be65"
-  integrity sha512-zSAVGcbst8DyHGw5WHzH9XxYnl8YDlVeYN+8fbCBM72OcMAn9y3Nvi7OUUT3QOpo5VNSEAo/nuB+M5rB6QpJ1A==
+sc-slot-rng-generator@1.0.1-beta.1:
+  version "1.0.1-beta.1"
+  resolved "http://npm.lumigame.com/sc-slot-rng-generator/-/sc-slot-rng-generator-1.0.1-beta.1.tgz#afb0cf0fe65e38ffeb78556dc171f8b07546b38d"
+  integrity sha512-PeSfqz+i1pRmQzKMn2h7YiyIl0IU4DqHvKM8jjfWd86nV1U811q4vLjsXoHot/VExpZZcGnFhQHfC2kkXgnb+g==
   dependencies:
     chance "^1.1.7"
     ramda "^0.28.0"
+    random "^3.0.6"
+    random-js "^2.1.0"
+
+seedrandom@^3.0.5:
+  version "3.0.5"
+  resolved "http://npm.lumigame.com/seedrandom/-/seedrandom-3.0.5.tgz#54edc85c95222525b0c7a6f6b3543d8e0b3aa0a7"
+  integrity sha512-8OwmbklUNzwezjGInmZ+2clQmExQPvomqjL7LFqOYqtmuxRgQYqOD3mHaU+MvZn5FLUeVxVfQjwLZW/n/JFuqg==
 
 semantic-release@^17.1.1:
   version "17.4.7"
