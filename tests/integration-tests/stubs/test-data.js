@@ -24,6 +24,19 @@ const gameConfig = {
     name: gameSetting.name.toLowerCase(),
     minBet: 1,
     maxBet: 3000,
+    disabledround: 20,
+    choices_maxbet: {
+        bar: 3000,
+        tripleSeven: 3000,
+        watermelon: 3000,
+        star: 3000,
+        bell: 3000,
+        orange: 3000,
+        lemon: 3000,
+        cherry: 3000,
+        big: 3000,
+        small: 3000,
+    },
     maxBetPerChoices: {
         bar: 3000,
         tripleSeven: 3000,
@@ -37,7 +50,7 @@ const gameConfig = {
         small: 3000,
     },
     odds: {
-        bar: 10,
+        bar: 100,
         tripleSeven: 10,
         watermelon: 10,
         star: 10,
@@ -47,7 +60,7 @@ const gameConfig = {
         cherry: 10,
         big: 1.96,
         small: 1.96,
-        bar25: 253,
+        bar25: 25,
         tripleSeven3: 3,
         watermelon3: 3,
         star3: 3,
@@ -57,12 +70,23 @@ const gameConfig = {
         cherry3: 3,
         bar50: 50,
     },
+    slotRNGConfig: {
+        mode: 2,
+        luckySpinFrom: 1,
+        luckySpinTo: 2,
+    },
+    randomMode: 2,
+    botenabled: true,
+    maxbot: 10,
+    bot_maxbet: 100,
+    smartBotEnabled: true,
+    hour_maxbot: [0, 0, 0.02, 0.02, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 };
 
 const rounds = [
     {
         id: 1190117,
-        result: { symbol: ["lucky"], number: 8 },
+        result: { symbols: ["lucky"], number: 8 },
         settlementResult: {
             bar: true,
             bar50: false,
@@ -88,7 +112,7 @@ const rounds = [
     },
     {
         id: 1190118,
-        result: { symbol: ["lucky", "lemonx3", "cherryx3"], number: 4 },
+        result: { symbols: ["lucky", "lemonx3", "cherryx3"], number: 4 },
         settlementResult: {
             bar: false,
             bar50: false,

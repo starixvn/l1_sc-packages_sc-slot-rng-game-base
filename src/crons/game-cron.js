@@ -1,46 +1,29 @@
-import { Core } from "sc-game-base";
+import { TableGameCron } from "sc-game-base/src/table/crons";
 
-export default class GameCron extends Core.Crons.BaseGameCron {
-    resetForNewRound() {
-        super.resetForNewRound();
-
-        this.gameData.chips = {};
-        this.gameData.winningPlayers = {};
-    }
-
-    async start() {
-        await this.initRoundId();
-        await this.getSettingForNewRound();
-        await this.updateExchangeRates();
-        this.startCron();
-    }
-
+export default class GameCron extends TableGameCron {
     async proceed() {
-        const { durations } = this.definition;
+        const { durations, luckySymbolAnimationTime, luckyRoundDuration } = this.definition;
+        const { wholeRound, placingBets } = durations;
+        const { numberOfLuckyRounds, remainingTime, disabled } = this.gameData;
 
-        if (this.gameData.remainingTime === durations.wholeRound) {
+        if (remainingTime === wholeRound) {
             await this.checkGameStatus();
         }
 
-        if (!this.gameData.disabled) {
+        if (!disabled) {
             this.gameData.remainingTime--;
         }
 
-        if (this.isStartingTime(this.gameData.remainingTime, durations)) {
+        if (this.isStartingTime(remainingTime, durations)) {
             this.resetForNewRound();
             this.bot && (await this.bot.reset());
         }
 
-        if (this.gameData.remainingTime === durations.placingBets) {
-            await this.roundResultConsumer.generateResultAndPublishHash();
-            this.gameData.settlementResultFromAdmin = {};
-        }
-
-        if (this.gameData.remainingTime < 0) {
-            this.gameData.remainingTime = durations.wholeRound;
-
+        if (remainingTime < 0) {
             await this.settleGameRoundConsumer.settleRound(this.gameData);
-        } else if (this.gameData.remainingTime < durations.placingBets) {
+            const extendedLuckyTime = numberOfLuckyRounds > 0 ? luckySymbolAnimationTime + numberOfLuckyRounds * luckyRoundDuration : 0;
+            this.gameData.remainingTime = wholeRound + extendedLuckyTime;
+        } else if (remainingTime < placingBets) {
             this.bot && (await this.bot.run());
             this.runningRoundInfoPublisher.publish();
         }

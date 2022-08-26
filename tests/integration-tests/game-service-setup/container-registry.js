@@ -1,11 +1,9 @@
 import awilix from "awilix";
 import { Table } from "sc-game-base";
 
-import { fruitslotRounds, fruitslotTemptBets, fruitslotBets, fruitslotBetLogs } from "./models";
-import { SettleGameRoundConsumer, PlaceBetConsumer, RoundResultConsumer } from "./consumers";
-import AdminSocketRouter from "./routers/admin-socket-router";
-import { Crons, Consumers, Publishers } from "../../../src";
-
+import { fruitSlotRounds, fruitSlotTemptBets, fruitSlotBets, fruitSlotBetLogs } from "./models";
+import Bot from "../game-service-setup/crons/bot";
+import { Consumers, Crons } from "../../../src";
 const { asClass, asValue } = awilix;
 
 export default class ContainerRegistry extends Table.TableContainerRegistry {
@@ -13,10 +11,10 @@ export default class ContainerRegistry extends Table.TableContainerRegistry {
         super.registerModels();
 
         this.container.register({
-            roundsRepository: asValue(fruitslotRounds),
-            betsRepository: asValue(fruitslotBets),
-            betLogsRepository: asValue(fruitslotBetLogs),
-            tempBetsRepository: asValue(fruitslotTemptBets),
+            roundsRepository: asValue(fruitSlotRounds),
+            betsRepository: asValue(fruitSlotBets),
+            betLogsRepository: asValue(fruitSlotBetLogs),
+            tempBetsRepository: asValue(fruitSlotTemptBets),
         });
     }
 
@@ -24,7 +22,9 @@ export default class ContainerRegistry extends Table.TableContainerRegistry {
         super.registerCrons();
 
         this.container.register({
+            bot: asClass(Bot).singleton(),
             gameCron: asClass(Crons.GameCron).singleton().proxy(),
+            processBetQueue: asClass(Crons.ProcessBetQueue).singleton().proxy(),
         });
     }
 
@@ -32,26 +32,7 @@ export default class ContainerRegistry extends Table.TableContainerRegistry {
         super.registerConsumers();
 
         this.container.register({
-            placeBetConsumer: asClass(PlaceBetConsumer).singleton(),
-            settleGameRoundConsumer: asClass(SettleGameRoundConsumer).singleton().proxy(),
-            roundResultConsumer: asClass(RoundResultConsumer).singleton(),
-            inGameConsumer: asClass(Consumers.TableInGameConsumer).singleton(),
-        });
-    }
-
-    registerPublishers() {
-        super.registerPublishers();
-
-        this.container.register({
-            roundResultPublisher: asClass(Publishers.RoundResultPublisher).singleton(),
-        });
-    }
-
-    registerRouters() {
-        super.registerRouters();
-
-        this.container.register({
-            adminSocketRouter: asClass(AdminSocketRouter).proxy(),
+            settleGameRoundConsumer: asClass(Consumers.SettleGameRoundConsumer).singleton().proxy(),
         });
     }
 }

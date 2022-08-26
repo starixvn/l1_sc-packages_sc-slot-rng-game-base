@@ -11,8 +11,8 @@ import {
     normalUser,
 } from "sc-game-service-integration-utils";
 
-import appConfigs from "../game-service-setup/app-configs.IGT";
-import { fruitslotRounds, fruitslotBets, fruitslotBetLogs } from "../game-service-setup/models";
+import appConfigs from "../../../src/app-configs.IGT";
+import { fruitSlotRounds, fruitSlotBets, fruitSlotBetLogs } from "../game-service-setup/models";
 import { currencyData, game, gameConfig, rounds, userBetData, userBetLogsData } from "./test-data";
 
 const connectDatabase = async () => {
@@ -53,19 +53,19 @@ const getUserId = async (memberId) => {
 };
 
 const createRounds = async () => {
-    return fruitslotRounds.insertMany(rounds);
+    return fruitSlotRounds.insertMany(rounds);
 };
 
 const createUserBetData = async () => {
     const userId = await getUserId(normalUser.memberId);
     const betData = userBetData(userId);
-    return fruitslotBets.insertMany(betData);
+    return fruitSlotBets.insertMany(betData);
 };
 
 const createUserBetLogsData = async () => {
     const userId = await getUserId(normalUser.memberId);
     const betLogsData = userBetLogsData(userId);
-    return fruitslotBetLogs.insertMany(betLogsData);
+    return fruitSlotBetLogs.insertMany(betLogsData);
 };
 
 createTestData();

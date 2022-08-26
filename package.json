@@ -1,6 +1,6 @@
 {
     "name": "sc-slot-rng-game-base",
-    "version": "1.0.0-beta.0",
+    "version": "1.0.0-beta.2",
     "description": "",
     "main": "./src/index.js",
     "scripts": {
@@ -57,11 +57,11 @@
     "dependencies": {
         "chance": "^1.1.7",
         "sc-game-base": "3.0.6",
-        "sc-slot-rng-generator": "1.0.1-beta.1"
+        "sc-slot-rng-generator": "1.0.1-beta.3"
     },
     "resolutions": {
         "sc-game-base": "3.0.6",
-        "sc-base-database": "1.10.0"
+        "sc-base-database": "1.11.1-beta.0"
     },
     "husky": {
         "hooks": {

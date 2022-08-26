@@ -29,14 +29,18 @@ export const settleTest = () => {
                 if (inGameData.remainingTime && !receivedRemainingTime) {
                     receivedRemainingTime = true;
                     setTimeout(() => {
-                        console.log('eventTypes.bet, { betChoice: "big", amount: 10 }');
-                        client.emit(eventTypes.bet, { betChoice: "big", amount: 10 });
+                        client.emit(eventTypes.bet, { betChoice: "bar", amount: 35 });
+                        client.emit(eventTypes.bet, { betChoice: "tripleSeven", amount: 25 });
+                        client.emit(eventTypes.bet, { betChoice: "bar", amount: 15 });
+                        client.emit(eventTypes.bet, { betChoice: "orange", amount: 10 });
+                        client.emit(eventTypes.bet, { betChoice: "small", amount: 30 });
                     }, getTimeOutToBet(inGameData.remainingTime, gameSettings.durations) * 1000);
                 }
             });
 
             // Assert
             client.on(socketOptions.gameName, (data) => {
+                // TO DO: remove console.log
                 console.log(data);
                 if (data.status) {
                     expect(data.status.bet).toBeGreaterThan(0);
@@ -56,7 +60,6 @@ export const settleTest = () => {
 
             // Assert
             client.on(socketOptions.gameName, (data) => {
-                console.log(data);
                 if (data.finish) {
                     client.close();
                     done();

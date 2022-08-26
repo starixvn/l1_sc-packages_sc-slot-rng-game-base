@@ -29,7 +29,7 @@ const temptBetSchema = {
     freeBet: { type: Boolean, default: false },
 };
 
-const fruitslotBets = mongoose.model(
+const fruitSlotBets = mongoose.model(
     "fruitslot_bets",
     new mongoose.Schema({
         ...temptBetSchema,
@@ -58,7 +58,7 @@ const betLogsSchema = {
     freeBet: { type: Boolean, default: false },
 };
 
-const fruitslotTemptBets = mongoose.model("fruitslot_tempbets", new mongoose.Schema(temptBetSchema));
-const fruitslotBetLogs = mongoose.model("fruitslot_betlogs", betLogsSchema);
+const fruitSlotTemptBets = mongoose.model("fruitslot_tempbets", new mongoose.Schema(temptBetSchema));
+const fruitSlotBetLogs = mongoose.model("fruitslot_betlogs", betLogsSchema);
 
-export { fruitslotTemptBets, fruitslotBets, fruitslotBetLogs };
+export { fruitSlotTemptBets, fruitSlotBets, fruitSlotBetLogs };

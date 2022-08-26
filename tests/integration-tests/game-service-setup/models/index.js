@@ -1,4 +1,4 @@
-import { fruitslotTemptBets, fruitslotBets, fruitslotBetLogs } from "./fruitslot-bets";
-import fruitslotRounds from "./fruitslot-rounds";
+import { fruitSlotTemptBets, fruitSlotBets, fruitSlotBetLogs } from "./fruitslot-bets";
+import fruitSlotRounds from "./fruitslot-rounds";
 
-export { fruitslotRounds, fruitslotTemptBets, fruitslotBets, fruitslotBetLogs };
+export { fruitSlotRounds, fruitSlotTemptBets, fruitSlotBets, fruitSlotBetLogs };
