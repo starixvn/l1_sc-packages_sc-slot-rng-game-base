@@ -10,11 +10,12 @@ const generateResult = (symbolBetChoiceTable, ratio, extraMin, extraMax, mode = 
     return { result: { symbols: symbolResult, bigSmall: bigSmallResult } };
 };
 
-const getSettlementResult = (roundResult, initialSettlement) => {
-    roundResult.symbols.forEach((symbol) => (initialSettlement[symbol] = true));
-    initialSettlement[roundResult.bigSmall.choice] = true;
+const getSettlementResult = (roundResult, defaultSettlementResult) => {
+    const settlement = { ...defaultSettlementResult };
+    roundResult.symbols.forEach((symbol) => (settlement[symbol] = true));
+    settlement[roundResult.bigSmall.choice] = true;
 
-    return initialSettlement;
+    return settlement;
 };
 
 export { generateResult, getSettlementResult };

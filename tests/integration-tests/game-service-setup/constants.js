@@ -21,3 +21,137 @@ export const choiceNames = {
     bar50: "bar50",
     lucky: "lucky",
 };
+
+export const hedgeBetGroups = [choiceNames.big, choiceNames.small];
+
+export const symbolBetChoiceTable = [
+    {
+        name: choiceNames.bar,
+        odds: 100,
+        count: 4,
+        canBet: true,
+        relatedChoices: [choiceNames.bar25, choiceNames.bar50],
+    },
+    {
+        name: choiceNames.bar50,
+        odds: 50,
+        count: 8,
+        canBet: false,
+        relatedChoices: [],
+    },
+    {
+        name: choiceNames.bar25,
+        odds: 25,
+        count: 16,
+        canBet: false,
+        relatedChoices: [],
+    },
+    {
+        name: choiceNames.tripleSeven,
+        odds: 40,
+        count: 15,
+        canBet: true,
+        relatedChoices: [choiceNames.tripleSeven3],
+    },
+    {
+        name: choiceNames.tripleSeven3,
+        odds: 3,
+        count: 200,
+        canBet: false,
+        relatedChoices: [],
+    },
+    {
+        name: choiceNames.star,
+        odds: 30,
+        count: 20,
+        canBet: true,
+        relatedChoices: choiceNames.star3,
+    },
+    {
+        name: choiceNames.star3,
+        odds: 3,
+        count: 200,
+        canBet: false,
+        relatedChoices: [],
+    },
+    {
+        name: choiceNames.watermelon,
+        odds: 20,
+        count: 30,
+        canBet: true,
+        relatedChoices: choiceNames.watermelon3,
+    },
+    {
+        name: choiceNames.watermelon3,
+        odds: 3,
+        count: 200,
+        canBet: false,
+        relatedChoices: [],
+    },
+    {
+        name: choiceNames.bell,
+        odds: 20,
+        count: 30,
+        canBet: true,
+        relatedChoices: choiceNames.bell3,
+    },
+    {
+        name: choiceNames.bell3,
+        odds: 3,
+        count: 200,
+        canBet: false,
+        relatedChoices: [],
+    },
+    {
+        name: choiceNames.lemon,
+        odds: 15,
+        count: 40,
+        canBet: true,
+        relatedChoices: choiceNames.lemon3,
+    },
+    {
+        name: choiceNames.lemon3,
+        odds: 3,
+        count: 200,
+        canBet: false,
+        relatedChoices: [],
+    },
+    {
+        name: choiceNames.orange,
+        odds: 10,
+        count: 60,
+        canBet: true,
+        relatedChoices: choiceNames.orange3,
+    },
+    {
+        name: choiceNames.orange3,
+        odds: 3,
+        count: 200,
+        canBet: false,
+        relatedChoices: [],
+    },
+    {
+        name: choiceNames.cherry,
+        odds: 5,
+        count: 120,
+        canBet: true,
+        relatedChoices: choiceNames.cherry3,
+    },
+    {
+        name: choiceNames.cherry3,
+        odds: 3,
+        count: 200,
+        canBet: false,
+        relatedChoices: [],
+    },
+];
+
+export const choicesMapper = Object.keys(choiceNames).reduce((mapper, choiceName, index) => {
+    mapper[choiceName] = index + 1;
+    return mapper;
+}, {});
+
+export const defaultSettlementResult = Object.keys(choiceNames).reduce((settlement, choiceName) => {
+    settlement[choiceName] = false;
+    return settlement;
+}, {});

@@ -17,6 +17,7 @@ const temptBetSchema = {
     big: { type: Number, default: 0 },
     small: { type: Number, default: 0 },
 
+    totalAmount: { type: Number, default: 0 },
     thanhtoan: { type: Boolean, default: false },
     paid: { type: Boolean, default: false },
     betwin: { type: Number, default: 0 },
