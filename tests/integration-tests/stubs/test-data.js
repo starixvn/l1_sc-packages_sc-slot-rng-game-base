@@ -86,7 +86,7 @@ const gameConfig = {
 const rounds = [
     {
         id: 1190117,
-        result: { symbols: ["lucky"], number: 8 },
+        result: { symbols: ["lemonx3"], number: 8, isLucky: false },
         settlementResult: {
             bar: true,
             bar50: false,
@@ -112,7 +112,7 @@ const rounds = [
     },
     {
         id: 1190118,
-        result: { symbols: ["lucky", "lemonx3", "cherryx3"], number: 4 },
+        result: { symbols: ["lucky", "lemonx3", "cherryx3"], number: 4, isLucky: true },
         settlementResult: {
             bar: false,
             bar50: false,

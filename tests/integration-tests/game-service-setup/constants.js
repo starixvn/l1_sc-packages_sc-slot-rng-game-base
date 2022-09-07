@@ -19,7 +19,6 @@ export const choiceNames = {
     lemon3: "lemon3",
     cherry3: "cherry3",
     bar50: "bar50",
-    lucky: "lucky",
 };
 
 export const hedgeBetGroups = [choiceNames.big, choiceNames.small];

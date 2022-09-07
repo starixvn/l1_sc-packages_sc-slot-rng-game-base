@@ -46,8 +46,9 @@ const betLogsSchema = {
     name: { type: String, required: true },
     roundId: { type: Number, required: true },
 
-    choice: { type: String, default: 0 },
-    subChoices: { type: Object },
+    amount: { type: Number, default: 0 },
+    choice: { type: String },
+    subChoices: { type: Array },
     time: { type: Date },
     clientSentTime: { type: Date },
     receivedTime: { type: Date },

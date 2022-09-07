@@ -1,6 +1,6 @@
 import { Core } from "sc-game-base";
+import { luckySymbol } from "../result-helpers";
 
-const luckyChoice = "lucky";
 export default class SettleGameRoundConsumer extends Core.BaseEventConsumers.SettleGameRoundConsumer {
     constructor({ definition, gameData, roundResultPublisher, userBetResultPublisher, endGame, roundsRepository, betsRepository }) {
         super({ definition, gameData, roundResultPublisher, userBetResultPublisher, endGame, roundsRepository, betsRepository });
@@ -22,7 +22,7 @@ export default class SettleGameRoundConsumer extends Core.BaseEventConsumers.Set
     calculateBetResult(settlementResult, bet, odds) {
         const betResult = Object.entries(settlementResult).reduce(
             (result, [subChoice, win]) => {
-                if (subChoice === luckyChoice) {
+                if (subChoice === luckySymbol) {
                     return result;
                 }
 
@@ -61,13 +61,14 @@ export default class SettleGameRoundConsumer extends Core.BaseEventConsumers.Set
     async settleRound() {
         const { settle, defaultSettlementResult } = this.definition;
         const result = await this.generateResult();
+        const { isLucky, symbols, bigSmall } = result;
 
         const settlementResult = settle(result, defaultSettlementResult);
         const { roundId, exchangeRates } = this.gameData;
 
         const newRound = await this.roundsRepository.create({
             id: roundId,
-            result: { symbols: result.symbols, number: result.bigSmall.value },
+            result: { symbols, number: bigSmall.value, isLucky },
             settlementResult,
             time: new Date(),
             exchangeRateId: exchangeRates.exId,

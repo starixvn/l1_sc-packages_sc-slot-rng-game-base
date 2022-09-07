@@ -6,6 +6,7 @@ const resultSchema = new mongoose.Schema(
     {
         symbols: { type: Object, require: true },
         number: { type: Number },
+        isLucky: { type: Boolean, default: false },
     },
     { _id: false }
 );

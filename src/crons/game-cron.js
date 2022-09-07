@@ -20,9 +20,9 @@ export default class GameCron extends TableGameCron {
         }
 
         if (remainingTime < 0) {
-            await this.settleGameRoundConsumer.settleRound(this.gameData);
             const extendedLuckyTime = numberOfLuckyRounds > 0 ? luckySymbolAnimationTime + numberOfLuckyRounds * luckyRoundDuration : 0;
             this.gameData.remainingTime = wholeRound + extendedLuckyTime;
+            await this.settleGameRoundConsumer.settleRound();
         } else if (remainingTime < placingBets) {
             this.bot && (await this.bot.run());
             this.runningRoundInfoPublisher.publish();
