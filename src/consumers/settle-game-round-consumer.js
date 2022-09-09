@@ -1,5 +1,4 @@
 import { Core } from "sc-game-base";
-import { luckySymbol } from "../result-helpers";
 
 export default class SettleGameRoundConsumer extends Core.BaseEventConsumers.SettleGameRoundConsumer {
     constructor({ definition, gameData, roundResultPublisher, userBetResultPublisher, endGame, roundsRepository, betsRepository }) {
@@ -20,20 +19,25 @@ export default class SettleGameRoundConsumer extends Core.BaseEventConsumers.Set
     }
 
     calculateBetResult(settlementResult, bet, odds) {
-        const betResult = Object.entries(settlementResult).reduce(
-            (result, [subChoice, win]) => {
-                if (subChoice === luckySymbol) {
-                    return result;
-                }
+        const { symbolBetChoiceTable, hedgeBetGroups } = this.definition;
+        const mainChoices = symbolBetChoiceTable
+            .filter((choice) => choice.relatedChoices?.length > 0)
+            .concat(
+                hedgeBetGroups.map((choice) => {
+                    return { name: choice };
+                })
+            );
 
-                const mainChoice = this.getMainchoice(subChoice);
-                const betAmount = bet[mainChoice];
-                const originalOdds = odds[subChoice] || 1;
-                const winAmount = win ? betAmount * originalOdds : 0;
-
-                result.totalBetAmount += betAmount;
+        const betResult = mainChoices.reduce(
+            (result, mainChoice) => {
+                const choiceGroup = [mainChoice.name].concat([...(mainChoice?.relatedChoices || [])]);
+                const choiceGroupResult = this.calculateWinningByGroupChoice(choiceGroup, odds, settlementResult);
+                const betAmount = bet[mainChoice.name];
+                const winAmount = choiceGroupResult.isWinning ? betAmount * choiceGroupResult.totalWinOdds : 0;
                 result.totalWin += winAmount;
-                result.winningByChoices[mainChoice] = winAmount;
+
+                result.winningByChoices[mainChoice.name] = winAmount;
+                result.totalAmount += betAmount;
 
                 if (winAmount > 0) {
                     result.netWin += winAmount - betAmount;
@@ -44,7 +48,7 @@ export default class SettleGameRoundConsumer extends Core.BaseEventConsumers.Set
                 return result;
             },
             {
-                totalBetAmount: 0,
+                totalAmount: 0,
                 totalWin: 0,
                 netWin: 0,
                 totalLost: 0,
@@ -88,8 +92,17 @@ export default class SettleGameRoundConsumer extends Core.BaseEventConsumers.Set
         }
     }
 
-    getMainchoice(choiceName) {
-        const subChoice = this.definition.symbolBetChoiceTable.find((choice) => choice.relatedChoices.includes(choiceName));
-        return subChoice ? subChoice.name : choiceName;
+    calculateWinningByGroupChoice(choiceGroup, odds, settlementResult) {
+        return choiceGroup.reduce(
+            (result, choice) => {
+                if (settlementResult[choice]) {
+                    result.totalWinOdds += odds[choice] || 1;
+                    result.isWinning = true;
+                }
+
+                return result;
+            },
+            { totalWinOdds: 0, isWinning: false }
+        );
     }
 }

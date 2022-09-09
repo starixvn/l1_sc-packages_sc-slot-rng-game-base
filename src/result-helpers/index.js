@@ -18,4 +18,4 @@ const getSettlementResult = (roundResult, defaultSettlementResult) => {
     return settlement;
 };
 
-export { generateResult, getSettlementResult, luckySymbol };
+export { generateResult, getSettlementResult };

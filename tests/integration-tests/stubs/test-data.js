@@ -112,7 +112,7 @@ const rounds = [
     },
     {
         id: 1190118,
-        result: { symbols: ["lucky", "lemonx3", "cherryx3"], number: 4, isLucky: true },
+        result: { symbols: ["lemonx3", "cherryx3"], number: 4, isLucky: true },
         settlementResult: {
             bar: false,
             bar50: false,

@@ -64,7 +64,7 @@ export const symbolBetChoiceTable = [
         odds: 30,
         count: 20,
         canBet: true,
-        relatedChoices: choiceNames.star3,
+        relatedChoices: [choiceNames.star3],
     },
     {
         name: choiceNames.star3,
@@ -78,7 +78,7 @@ export const symbolBetChoiceTable = [
         odds: 20,
         count: 30,
         canBet: true,
-        relatedChoices: choiceNames.watermelon3,
+        relatedChoices: [choiceNames.watermelon3],
     },
     {
         name: choiceNames.watermelon3,
@@ -92,7 +92,7 @@ export const symbolBetChoiceTable = [
         odds: 20,
         count: 30,
         canBet: true,
-        relatedChoices: choiceNames.bell3,
+        relatedChoices: [choiceNames.bell3],
     },
     {
         name: choiceNames.bell3,
@@ -106,7 +106,7 @@ export const symbolBetChoiceTable = [
         odds: 15,
         count: 40,
         canBet: true,
-        relatedChoices: choiceNames.lemon3,
+        relatedChoices: [choiceNames.lemon3],
     },
     {
         name: choiceNames.lemon3,
@@ -120,7 +120,7 @@ export const symbolBetChoiceTable = [
         odds: 10,
         count: 60,
         canBet: true,
-        relatedChoices: choiceNames.orange3,
+        relatedChoices: [choiceNames.orange3],
     },
     {
         name: choiceNames.orange3,
@@ -134,7 +134,7 @@ export const symbolBetChoiceTable = [
         odds: 5,
         count: 120,
         canBet: true,
-        relatedChoices: choiceNames.cherry3,
+        relatedChoices: [choiceNames.cherry3],
     },
     {
         name: choiceNames.cherry3,

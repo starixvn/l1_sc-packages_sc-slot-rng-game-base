@@ -4,8 +4,8 @@ export default {
     id: 59,
     name: "FruitSlot",
     durations: {
-        wholeRound: 47,
-        placingBets: 35,
+        wholeRound: 42,
+        placingBets: 30,
         lockingBet: 5,
     },
     choices: Object.values(choiceNames),
