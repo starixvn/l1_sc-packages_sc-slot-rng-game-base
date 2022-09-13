@@ -1,5 +1,6 @@
 import { Core } from "sc-game-base";
-
+import { stubMongoose, stub } from "jest-micro-auto-stub";
+import mongoose from "mongoose";
 import SettleGameRoundConsumer from "../../../src/consumers/settle-game-round-consumer";
 import { gameConfig } from "../../integration-tests/stubs/test-data";
 import gameSettings from "../../integration-tests/game-service-setup/game-settings";
@@ -7,18 +8,32 @@ import { GameDefinition } from "../../../src";
 
 jest.mock("sc-game-base/src/core/event-publishers/round-result-publisher");
 jest.mock("sc-game-base/src/core/event-publishers/user-bet-result-publisher");
-
+let gameData, definition, consumer;
 const gameName = "FruitSlot";
 const endGame = jest.fn();
-const definition = new GameDefinition(gameSettings, jest.fn(), jest.fn());
-const gameData = new Core.GameData();
+definition = new GameDefinition(gameSettings, jest.fn(), jest.fn());
+gameData = new Core.GameData();
 gameData.gameConfigs = gameConfig;
+gameData.exchangeRates.exId = 10;
+
+const roundsRepository = stubMongoose(mongoose.Model);
+const betsRepository = stubMongoose(mongoose.Model);
 
 const roundResultPublisher = new Core.BaseEventPublishers.RoundResultPublisher(gameName, gameData);
 const userBetResultPublisher = new Core.BaseEventPublishers.UserBetResultPublisher(gameName, gameData);
-const consumer = new SettleGameRoundConsumer({
-    definition,
-    gameData,
+
+beforeEach(() => {
+    jest.clearAllMocks();
+
+    consumer = new SettleGameRoundConsumer({
+        definition,
+        gameData,
+        roundResultPublisher,
+        userBetResultPublisher,
+        endGame,
+        roundsRepository,
+        betsRepository,
+    });
 });
 
 describe("SettleGameRoundConsumer test", () => {
@@ -66,7 +81,7 @@ describe("calculateBetResult test", () => {
                 small: 0,
             },
             expectResult: {
-                totalAmount: 175,
+                totalBetAmount: 175,
                 totalWin: 0,
                 netWin: 0,
                 totalLost: 175,
@@ -121,7 +136,7 @@ describe("calculateBetResult test", () => {
                 small: 0,
             },
             expectResult: {
-                totalAmount: 60,
+                totalBetAmount: 60,
                 totalWin: 1000,
                 netWin: 990,
                 totalLost: 50,
@@ -176,7 +191,7 @@ describe("calculateBetResult test", () => {
                 small: 0,
             },
             expectResult: {
-                totalAmount: 10,
+                totalBetAmount: 10,
                 totalWin: 500,
                 netWin: 490,
                 totalLost: 0,
@@ -231,7 +246,7 @@ describe("calculateBetResult test", () => {
                 small: 0,
             },
             expectResult: {
-                totalAmount: 10,
+                totalBetAmount: 10,
                 totalWin: 1500,
                 netWin: 1490,
                 totalLost: 0,
@@ -286,7 +301,7 @@ describe("calculateBetResult test", () => {
                 small: 0,
             },
             expectResult: {
-                totalAmount: 60,
+                totalBetAmount: 60,
                 totalWin: 1500,
                 netWin: 1490,
                 totalLost: 50,
@@ -341,7 +356,7 @@ describe("calculateBetResult test", () => {
                 small: 0,
             },
             expectResult: {
-                totalAmount: 70,
+                totalBetAmount: 70,
                 totalWin: 1030,
                 netWin: 1010,
                 totalLost: 50,
@@ -365,6 +380,146 @@ describe("calculateBetResult test", () => {
         const actualResult = consumer.calculateBetResult(settlementResult, bet, gameData.gameConfigs.odds, roundResult);
 
         expect(actualResult).toEqual(expectResult);
+    });
+});
+
+describe("settleRound", () => {
+    const result = { symbols: ["lemon"], bigSmall: { value: 6 }, isLucky: false };
+    const settlementResult = {
+        bar: false,
+        bar50: false,
+        bar25: false,
+        tripleSeven: false,
+        tripleSeven3: false,
+        watermelon: false,
+        watermelon3: false,
+        star: false,
+        star3: false,
+        bell: false,
+        bell3: false,
+        orange: false,
+        orange3: false,
+        lemon: true,
+        lemon3: false,
+        cherry: false,
+        cherry3: false,
+        big: false,
+        small: true,
+    };
+
+    const defaultSettlementResult = {
+        bar: false,
+        bar50: false,
+        bar25: false,
+        tripleSeven: false,
+        tripleSeven3: false,
+        watermelon: false,
+        watermelon3: false,
+        star: false,
+        star3: false,
+        bell: false,
+        bell3: false,
+        orange: false,
+        orange3: false,
+        lemon: false,
+        lemon3: false,
+        cherry: false,
+        cherry3: false,
+        big: false,
+        small: false,
+    };
+    const mockDate = new Date();
+    const createRoundResult = { id: 1, result, settlementResult, time: mockDate };
+
+    beforeEach(() => {
+        gameData.result = result;
+        definition.generateResult.mockReturnValueOnce({ result });
+        definition.settle.mockReturnValueOnce(settlementResult);
+
+        jest.spyOn(global, "Date").mockImplementation(() => mockDate);
+        roundsRepository.create.mockReturnValueOnce(createRoundResult);
+        consumer = new SettleGameRoundConsumer({
+            definition,
+            gameData,
+            roundResultPublisher,
+            userBetResultPublisher,
+            endGame,
+            roundsRepository,
+            betsRepository,
+        });
+        consumer.settleBets = jest.fn();
+    });
+
+    it("should call settle with generated result", async () => {
+        // Act
+        await consumer.settleRound();
+
+        // Assert
+        expect(definition.settle).toHaveBeenCalledWith(result, defaultSettlementResult);
+    });
+
+    it("should create new round", async () => {
+        // Act
+        await consumer.settleRound();
+
+        // Assert
+        expect(roundsRepository.create).toHaveBeenCalledWith({
+            id: 2,
+            result: { symbols: ["lemon"], number: 6, isLucky: false },
+            settlementResult,
+            time: mockDate,
+            exchangeRateId: gameData.exchangeRates.exId,
+        });
+    });
+
+    describe("when create new round successfully", () => {
+        it("should increase roundId", async () => {
+            // Act
+            await consumer.settleRound();
+
+            // Assert
+            expect(gameData.roundId).toBe(createRoundResult.id + 1);
+        });
+
+        it("should call settle bets", async () => {
+            // Act
+            await consumer.settleRound();
+
+            // Assert
+            expect(consumer.settleBets).toHaveBeenCalledWith({
+                settlementResult,
+                result,
+                roundId: createRoundResult.id,
+                time: createRoundResult.time,
+            });
+        });
+    });
+
+    describe("when failed to create new round", () => {
+        beforeEach(() => {
+            roundsRepository.create.mockRestore();
+            roundsRepository.create.mockReturnValueOnce(undefined);
+        });
+
+        it("should not increase roundId", async () => {
+            // Arrange
+            const currentRoundId = 1;
+            gameData.roundId = currentRoundId;
+
+            // Act
+            await consumer.settleRound();
+
+            // Assert
+            expect(gameData.roundId).toBe(currentRoundId);
+        });
+
+        it("should not call settle bets", async () => {
+            // Act
+            await consumer.settleRound();
+
+            // Assert
+            expect(consumer.settleBets).not.toHaveBeenCalled();
+        });
     });
 });
 

@@ -1,6 +1,6 @@
-import { Core } from "sc-game-base";
+import { Table } from "sc-game-base";
 
-export default class ProcessBetQueue extends Core.Crons.ProcessBetQueue {
+export default class ProcessBetQueue extends Table.Crons.TableProcessBetQueue {
     async insertBetLog(player, roundId, bet, rate) {
         const subChoices = this.definition.symbolBetChoiceTable.find((choice) => choice.name === bet.betChoice)?.relatedChoices ?? [];
 

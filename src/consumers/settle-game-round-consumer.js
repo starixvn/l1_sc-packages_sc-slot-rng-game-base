@@ -5,19 +5,6 @@ export default class SettleGameRoundConsumer extends Core.BaseEventConsumers.Set
         super({ definition, gameData, roundResultPublisher, userBetResultPublisher, endGame, roundsRepository, betsRepository });
     }
 
-    async generateResult() {
-        const { gameConfigs } = this.gameData;
-        const { randomMode, slotRNGConfig } = gameConfigs;
-        const { luckySpinFrom, luckySpinTo, mode } = slotRNGConfig;
-        const { generateResult, ratioModes, symbolBetChoiceTable } = this.definition;
-
-        const { result } = generateResult(symbolBetChoiceTable, ratioModes[mode], luckySpinFrom, luckySpinTo, randomMode);
-        const numberOfSymbols = result.symbols.length;
-        this.gameData.numberOfLuckyRounds = numberOfSymbols === 1 ? 0 : numberOfSymbols - 1;
-
-        return result;
-    }
-
     calculateBetResult(settlementResult, bet, odds) {
         const { symbolBetChoiceTable, hedgeBetGroups } = this.definition;
         const mainChoices = symbolBetChoiceTable
@@ -37,7 +24,7 @@ export default class SettleGameRoundConsumer extends Core.BaseEventConsumers.Set
                 result.totalWin += winAmount;
 
                 result.winningByChoices[mainChoice.name] = winAmount;
-                result.totalAmount += betAmount;
+                result.totalBetAmount += betAmount;
 
                 if (winAmount > 0) {
                     result.netWin += winAmount - betAmount;
@@ -48,7 +35,7 @@ export default class SettleGameRoundConsumer extends Core.BaseEventConsumers.Set
                 return result;
             },
             {
-                totalAmount: 0,
+                totalBetAmount: 0,
                 totalWin: 0,
                 netWin: 0,
                 totalLost: 0,
@@ -63,8 +50,15 @@ export default class SettleGameRoundConsumer extends Core.BaseEventConsumers.Set
     }
 
     async settleRound() {
-        const { settle, defaultSettlementResult } = this.definition;
-        const result = await this.generateResult();
+        const { settle, defaultSettlementResult, generateResult, ratioModes, symbolBetChoiceTable } = this.definition;
+        const { gameConfigs } = this.gameData;
+        const { randomMode, slotRNGConfig } = gameConfigs;
+        const { luckySpinFrom, luckySpinTo, mode } = slotRNGConfig;
+
+        const { result } = generateResult(symbolBetChoiceTable, ratioModes[mode], luckySpinFrom, luckySpinTo, randomMode);
+        const numberOfSymbols = result.symbols.length;
+        this.gameData.numberOfLuckyRounds = numberOfSymbols === 1 ? 0 : numberOfSymbols - 1;
+
         const { isLucky, symbols, bigSmall } = result;
 
         const settlementResult = settle(result, defaultSettlementResult);
