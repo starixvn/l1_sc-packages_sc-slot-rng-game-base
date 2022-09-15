@@ -523,6 +523,184 @@ describe("settleRound", () => {
     });
 });
 
+describe("calculateBetResult", () => {
+    const settlementResult = {
+        bar: false,
+        bar50: false,
+        bar25: false,
+        tripleSeven: false,
+        tripleSeven3: false,
+        watermelon: false,
+        watermelon3: false,
+        star: false,
+        star3: false,
+        bell: false,
+        bell3: false,
+        orange: false,
+        orange3: false,
+        lemon: true,
+        lemon3: false,
+        cherry: false,
+        cherry3: false,
+        big: false,
+        small: true,
+    };
+    const odds = gameData.gameConfigs.odds;
+
+    describe("when bet result is win", () => {
+        const choice = "lemon";
+        const bet = { [choice]: 100 };
+
+        it("should return result with correct net win", () => {
+            // Act
+            const actualResult = consumer.calculateBetResult(settlementResult, bet, odds);
+
+            // Assert
+            expect(actualResult.netWin).toBe(900);
+        });
+
+        it("should return with correct total bet amount", () => {
+            // Act
+            const actualResult = consumer.calculateBetResult(settlementResult, bet, odds);
+
+            // Assert
+            expect(actualResult.totalBetAmount).toBe(100);
+        });
+
+        it("should return result with total win includes net win and total bet", () => {
+            // Act
+            const actualResult = consumer.calculateBetResult(settlementResult, bet, odds);
+
+            // Assert
+            expect(actualResult.totalWin).toBe(1000);
+        });
+
+        it("should return result with total lost is zero", () => {
+            // Act
+            const actualResult = consumer.calculateBetResult(settlementResult, bet, odds);
+
+            // Assert
+            expect(actualResult.totalLost).toBe(0);
+        });
+
+        it("should return correct choice winning", () => {
+            // Act
+            const actualResult = consumer.calculateBetResult(settlementResult, bet, odds);
+
+            // Assert
+            expect(actualResult.winningByChoices).toStrictEqual({
+                bar: 0,
+                tripleSeven: 0,
+                watermelon: 0,
+                star: 0,
+                bell: 0,
+                orange: 0,
+                lemon: 1000,
+                cherry: 0,
+                big: 0,
+                small: 0,
+            });
+        });
+    });
+
+    describe("when bet result is lose", () => {
+        const bet = { bar: 500 };
+
+        it("should return result with net win is 0", () => {
+            // Act
+            const actualResult = consumer.calculateBetResult(settlementResult, bet, odds);
+
+            // Assert
+            expect(actualResult.netWin).toBe(0);
+        });
+
+        it("should return result with total win is 0", () => {
+            // Act
+            const actualResult = consumer.calculateBetResult(settlementResult, bet, odds);
+
+            // Assert
+            expect(actualResult.totalWin).toBe(0);
+        });
+
+        it("should return result with total lost is bet amount", () => {
+            // Act
+            const actualResult = consumer.calculateBetResult(settlementResult, bet, odds);
+
+            // Assert
+            expect(actualResult.totalLost).toBe(500);
+        });
+
+        it("should return correct choice winning", () => {
+            // Act
+            const actualResult = consumer.calculateBetResult(settlementResult, bet, odds);
+
+            // Assert
+            expect(actualResult.winningByChoices).toStrictEqual({
+                bar: 0,
+                tripleSeven: 0,
+                watermelon: 0,
+                star: 0,
+                bell: 0,
+                orange: 0,
+                lemon: 0,
+                cherry: 0,
+                big: 0,
+                small: 0,
+            });
+        });
+    });
+});
+
+describe("calculateWinningByGroupChoice", () => {
+    const settlementResult = {
+        bar: false,
+        bar50: true,
+        bar25: false,
+        tripleSeven: false,
+        tripleSeven3: false,
+        watermelon: false,
+        watermelon3: false,
+        star: false,
+        star3: false,
+        bell: false,
+        bell3: false,
+        orange: false,
+        orange3: false,
+        lemon: false,
+        lemon3: false,
+        cherry: false,
+        cherry3: false,
+        big: false,
+        small: true,
+    };
+    const odds = gameData.gameConfigs.odds;
+
+    const testCases = [
+        {
+            groupChoices: ["bar", "bar25", "bar50"],
+            expectedResult: {
+                totalWinOdds: 50,
+                isWinning: true,
+            },
+        },
+        {
+            groupChoices: ["lemon", "lemon3", "lemon30"],
+            expectedResult: {
+                totalWinOdds: 0,
+                isWinning: false,
+            },
+        },
+    ];
+
+    it.each(testCases)("should return correct group choice winning", ({ groupChoices, expectedResult }) => {
+        // Act
+        const actualResult = consumer.calculateWinningByGroupChoice(groupChoices, odds, settlementResult);
+
+        // Assert
+        expect(actualResult).toStrictEqual(expectedResult);
+    });
+});
+
 beforeEach(() => {
     jest.clearAllMocks();
 });

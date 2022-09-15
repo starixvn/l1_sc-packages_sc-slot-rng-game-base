@@ -19,7 +19,7 @@ export default class SettleGameRoundConsumer extends Core.BaseEventConsumers.Set
             (result, mainChoice) => {
                 const choiceGroup = [mainChoice.name].concat([...(mainChoice?.relatedChoices || [])]);
                 const choiceGroupResult = this.calculateWinningByGroupChoice(choiceGroup, odds, settlementResult);
-                const betAmount = bet[mainChoice.name];
+                const betAmount = bet[mainChoice.name] ?? 0;
                 const winAmount = choiceGroupResult.isWinning ? betAmount * choiceGroupResult.totalWinOdds : 0;
                 result.totalWin += winAmount;
 
