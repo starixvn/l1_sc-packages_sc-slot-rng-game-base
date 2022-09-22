@@ -51,11 +51,15 @@ export default class SettleGameRoundConsumer extends Core.BaseEventConsumers.Set
 
     async settleRound() {
         const { settle, defaultSettlementResult, generateResult, ratioModes, symbolBetChoiceTable } = this.definition;
-        const { gameConfigs } = this.gameData;
+        const { gameConfigs, settlementResultFromAdmin } = this.gameData;
         const { randomMode, slotRNGConfig } = gameConfigs;
         const { luckySpinFrom, luckySpinTo, mode } = slotRNGConfig;
 
-        const { result } = generateResult(symbolBetChoiceTable, ratioModes[mode], luckySpinFrom, luckySpinTo, randomMode);
+        const { result } =
+            this.gameData.roundId === settlementResultFromAdmin.roundId
+                ? settlementResultFromAdmin
+                : generateResult(symbolBetChoiceTable, ratioModes[mode], luckySpinFrom, luckySpinTo, randomMode);
+
         const numberOfSymbols = result.symbols.length;
         this.gameData.numberOfLuckyRounds = numberOfSymbols === 1 ? 0 : numberOfSymbols - 1;
 
