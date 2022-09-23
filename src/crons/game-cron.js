@@ -1,6 +1,6 @@
-import { TableGameCron } from "sc-game-base/src/table/crons";
+import { Table } from "sc-game-base";
 
-export default class GameCron extends TableGameCron {
+export default class GameCron extends Table.Crons.TableGameCron {
     async proceed() {
         const { durations, luckySymbolAnimationTime, luckyRoundDuration } = this.definition;
         const { wholeRound, placingBets } = durations;
