@@ -49,8 +49,8 @@ export default class SettleGameRoundConsumer extends Core.BaseEventConsumers.Set
         return betResult;
     }
 
-    async settleRound() {
-        const { settle, defaultSettlementResult, generateResult, ratioModes, symbolBetChoiceTable } = this.definition;
+    async generateResult() {
+        const { generateResult, ratioModes, symbolBetChoiceTable, symbolPositonsMapper } = this.definition;
         const { gameConfigs, settlementResultFromAdmin } = this.gameData;
         const { randomMode, slotRNGConfig } = gameConfigs;
         const { luckySpinFrom, luckySpinTo, mode } = slotRNGConfig;
@@ -58,11 +58,16 @@ export default class SettleGameRoundConsumer extends Core.BaseEventConsumers.Set
         const { result } =
             this.gameData.roundId === settlementResultFromAdmin.roundId
                 ? settlementResultFromAdmin
-                : generateResult(symbolBetChoiceTable, ratioModes[mode], luckySpinFrom, luckySpinTo, randomMode);
+                : generateResult(symbolBetChoiceTable, symbolPositonsMapper, ratioModes[mode], luckySpinFrom, luckySpinTo, randomMode);
 
         const numberOfSymbols = result.symbols.length;
         this.gameData.numberOfLuckyRounds = numberOfSymbols === 1 ? 0 : numberOfSymbols - 1;
 
+        return result;
+    }
+
+    async settleRound(result) {
+        const { settle, defaultSettlementResult } = this.definition;
         const { isLucky, symbols, bigSmall } = result;
 
         const settlementResult = settle(result, defaultSettlementResult);

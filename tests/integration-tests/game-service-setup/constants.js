@@ -1,24 +1,24 @@
 export const chips = [2000, 1000, 500, 200, 100, 50, 10, 5, 1];
 export const choiceNames = {
     bar: "bar",
+    bar25: "bar25",
+    bar50: "bar50",
     tripleSeven: "tripleSeven",
+    tripleSeven3: "tripleSeven3",
     watermelon: "watermelon",
+    watermelon3: "watermelon3",
     star: "star",
+    star3: "star3",
     bell: "bell",
+    bell3: "bell3",
     orange: "orange",
+    orange3: "orange3",
     lemon: "lemon",
+    lemon3: "lemon3",
     cherry: "cherry",
+    cherry3: "cherry3",
     big: "big",
     small: "small",
-    bar25: "bar25",
-    tripleSeven3: "tripleSeven3",
-    watermelon3: "watermelon3",
-    star3: "star3",
-    bell3: "bell3",
-    orange3: "orange3",
-    lemon3: "lemon3",
-    cherry3: "cherry3",
-    bar50: "bar50",
 };
 
 export const hedgeBetGroups = [choiceNames.big, choiceNames.small];
@@ -144,6 +144,27 @@ export const symbolBetChoiceTable = [
         relatedChoices: [],
     },
 ];
+
+export const symbolPositonsMapper = {
+    bar: [5],
+    bar25: [3],
+    bar50: [4],
+    tripleSeven: [16],
+    tripleSeven3: [15],
+    watermelon: [8],
+    watermelon3: [9],
+    star: [20],
+    star3: [21],
+    bell: [2],
+    bell3: [0],
+    orange: [1, 13],
+    orange3: [12],
+    lemon: [7, 19],
+    lemon3: [18],
+    cherry: [11, 17, 23],
+    cherry3: [6],
+    lucky: [10, 22],
+};
 
 export const choicesMapper = Object.keys(choiceNames).reduce((mapper, choiceName, index) => {
     mapper[choiceName] = index + 1;

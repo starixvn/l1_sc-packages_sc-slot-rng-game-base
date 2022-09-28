@@ -4,6 +4,7 @@ export default class GameData extends TableGameData {
     constructor(remainingTime) {
         super(remainingTime);
 
-        this.numberOfLuckyRound = 0;
+        this.numberOfLuckyRounds = 0;
+        this.ischeckGameStatus = false;
     }
 }

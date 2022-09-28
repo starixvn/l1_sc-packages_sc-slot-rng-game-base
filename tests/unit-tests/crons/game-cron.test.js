@@ -193,6 +193,7 @@ const buildGameCon = (gameCron, definition, gameData) => {
     gameCron.isStartingTime = jest.fn(() => false);
     gameCron.settleGameRoundConsumer = {
         settleRound: jest.fn(),
+        generateResult: jest.fn(),
     };
     gameCron.bot = {
         reset: jest.fn(),

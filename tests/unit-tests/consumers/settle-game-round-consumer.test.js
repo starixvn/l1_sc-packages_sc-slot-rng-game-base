@@ -45,7 +45,7 @@ describe("SettleGameRoundConsumer test", () => {
 describe("calculateBetResult test", () => {
     const testCases = [
         {
-            roundResult: { symbols: ["lemon"], number: 6, isLucky: false },
+            roundResult: { symbols: ["lemon"], symbolPositons: [1], number: 6, isLucky: false },
             settlementResult: {
                 bar: false,
                 bar50: false,
@@ -100,7 +100,7 @@ describe("calculateBetResult test", () => {
             },
         },
         {
-            roundResult: { symbols: ["bar"], number: 6, isLucky: false },
+            roundResult: { symbols: ["bar"], symbolPositons: [1], number: 6, isLucky: false },
             settlementResult: {
                 bar: true,
                 bar50: false,
@@ -155,7 +155,7 @@ describe("calculateBetResult test", () => {
             },
         },
         {
-            roundResult: { symbols: ["bar50"], number: 6, isLucky: false },
+            roundResult: { symbols: ["bar50"], symbolPositons: [1], number: 6, isLucky: false },
             settlementResult: {
                 bar: false,
                 bar50: true,
@@ -210,7 +210,7 @@ describe("calculateBetResult test", () => {
             },
         },
         {
-            roundResult: { symbols: ["bar50", "bar"], number: 6, isLucky: true },
+            roundResult: { symbols: ["bar50", "bar"], symbolPositons: [10, 2, 3], number: 6, isLucky: true },
             settlementResult: {
                 bar: true,
                 bar50: true,
@@ -265,7 +265,7 @@ describe("calculateBetResult test", () => {
             },
         },
         {
-            roundResult: { symbols: ["bar50", "bar"], number: 6, isLucky: true },
+            roundResult: { symbols: ["bar50", "bar"], symbolPositons: [10, 2, 3], number: 6, isLucky: true },
             settlementResult: {
                 bar: true,
                 bar50: true,
@@ -320,7 +320,7 @@ describe("calculateBetResult test", () => {
             },
         },
         {
-            roundResult: { symbols: ["lemon3", "bar"], number: 6, isLucky: true },
+            roundResult: { symbols: ["lemon3", "bar"], symbolPositons: [10, 2, 3], number: 6, isLucky: true },
             settlementResult: {
                 bar: true,
                 bar50: false,
@@ -452,7 +452,7 @@ describe("settleRound", () => {
 
     it("should call settle with generated result", async () => {
         // Act
-        await consumer.settleRound();
+        await consumer.settleRound(result);
 
         // Assert
         expect(definition.settle).toHaveBeenCalledWith(result, defaultSettlementResult);
@@ -460,7 +460,7 @@ describe("settleRound", () => {
 
     it("should create new round", async () => {
         // Act
-        await consumer.settleRound();
+        await consumer.settleRound(result);
 
         // Assert
         expect(roundsRepository.create).toHaveBeenCalledWith({
@@ -475,7 +475,7 @@ describe("settleRound", () => {
     describe("when create new round successfully", () => {
         it("should increase roundId", async () => {
             // Act
-            await consumer.settleRound();
+            await consumer.settleRound(result);
 
             // Assert
             expect(gameData.roundId).toBe(createRoundResult.id + 1);
@@ -483,7 +483,7 @@ describe("settleRound", () => {
 
         it("should call settle bets", async () => {
             // Act
-            await consumer.settleRound();
+            await consumer.settleRound(result);
 
             // Assert
             expect(consumer.settleBets).toHaveBeenCalledWith({
@@ -507,7 +507,7 @@ describe("settleRound", () => {
             gameData.roundId = currentRoundId;
 
             // Act
-            await consumer.settleRound();
+            await consumer.settleRound(result);
 
             // Assert
             expect(gameData.roundId).toBe(currentRoundId);
@@ -515,7 +515,7 @@ describe("settleRound", () => {
 
         it("should not call settle bets", async () => {
             // Act
-            await consumer.settleRound();
+            await consumer.settleRound(result);
 
             // Assert
             expect(consumer.settleBets).not.toHaveBeenCalled();

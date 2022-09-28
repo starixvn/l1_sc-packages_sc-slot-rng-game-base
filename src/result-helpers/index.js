@@ -1,19 +1,33 @@
 import { ResultGenerator, BigSmallResultGenerator } from "sc-slot-rng-generator";
+import Chance from "chance";
 
 const luckySymbol = "lucky";
-const generateResult = (symbolBetChoiceTable, ratio, extraMin, extraMax, mode = 1) => {
+const generateResult = (symbolBetChoiceTable, symbolPositonsMapper, ratio, extraMin, extraMax, mode = 1) => {
+    const chance = new Chance();
     const symbolGenerator = new ResultGenerator(symbolBetChoiceTable, { ratio, extraMin, extraMax }, mode);
     const bigSmallGenerator = new BigSmallResultGenerator(mode);
     const { isLucky, choices } = symbolGenerator.generate();
 
-    return { result: { isLucky, symbols: choices, bigSmall: bigSmallGenerator.generate() } };
+    const symbolPositons = choices.map((choice) => {
+        return chance.pickone(symbolPositonsMapper[choice]);
+    });
+
+    return {
+        result: {
+            isLucky,
+            symbols: choices,
+            symbolPositons: isLucky ? [chance.pickone(symbolPositonsMapper[luckySymbol])].concat(symbolPositons) : symbolPositons,
+            bigSmall: bigSmallGenerator.generate(),
+        },
+    };
 };
 
 const getSettlementResult = (roundResult, defaultSettlementResult) => {
+    const { isLucky, symbols, bigSmall } = roundResult;
     const settlement = { ...defaultSettlementResult };
-    roundResult.symbols.forEach((symbol) => (settlement[symbol] = true));
-    settlement[roundResult.bigSmall.choice] = true;
-    settlement[luckySymbol] = roundResult.isLucky;
+    symbols.forEach((symbol) => (settlement[symbol] = true));
+    settlement[bigSmall.choice] = true;
+    settlement[luckySymbol] = isLucky;
 
     return settlement;
 };
