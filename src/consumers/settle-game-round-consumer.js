@@ -50,7 +50,7 @@ export default class SettleGameRoundConsumer extends Core.BaseEventConsumers.Set
     }
 
     async generateResult() {
-        const { generateResult, ratioModes, symbolBetChoiceTable, symbolPositonsMapper } = this.definition;
+        const { generateResult, ratioModes, symbolBetChoiceTable, symbolPositionsMapper } = this.definition;
         const { gameConfigs, settlementResultFromAdmin } = this.gameData;
         const { randomMode, slotRNGConfig } = gameConfigs;
         const { luckySpinFrom, luckySpinTo, mode } = slotRNGConfig;
@@ -58,7 +58,7 @@ export default class SettleGameRoundConsumer extends Core.BaseEventConsumers.Set
         const { result } =
             this.gameData.roundId === settlementResultFromAdmin.roundId
                 ? settlementResultFromAdmin
-                : generateResult(symbolBetChoiceTable, symbolPositonsMapper, ratioModes[mode], luckySpinFrom, luckySpinTo, randomMode);
+                : generateResult(symbolBetChoiceTable, symbolPositionsMapper, ratioModes[mode], luckySpinFrom, luckySpinTo, randomMode);
 
         const numberOfSymbols = result.symbols.length;
         this.gameData.numberOfLuckyRounds = numberOfSymbols === 1 ? 0 : numberOfSymbols - 1;
@@ -68,14 +68,19 @@ export default class SettleGameRoundConsumer extends Core.BaseEventConsumers.Set
 
     async settleRound(result) {
         const { settle, defaultSettlementResult } = this.definition;
-        const { isLucky, symbols, bigSmall } = result;
+        const { isLucky, symbols, bigSmall, symbolPositions } = result;
 
         const settlementResult = settle(result, defaultSettlementResult);
         const { roundId, exchangeRates } = this.gameData;
 
         const newRound = await this.roundsRepository.create({
             id: roundId,
-            result: { symbols, number: bigSmall.value, isLucky },
+            result: {
+                symbols,
+                symbolPositions,
+                number: bigSmall.value,
+                isLucky,
+            },
             settlementResult,
             time: new Date(),
             exchangeRateId: exchangeRates.exId,

@@ -15,7 +15,7 @@ export default class GameDefinition extends Core.GameDefinition {
             luckyRoundDuration = 2,
             ratioModes = {},
             symbolBetChoiceTable = [],
-            symbolPositonsMapper = {},
+            symbolPositionsMapper = {},
             defaultSettlementResult = {},
         },
         generateResult,
@@ -30,7 +30,7 @@ export default class GameDefinition extends Core.GameDefinition {
         this.luckyRoundDuration = luckyRoundDuration;
         this.ratioModes = ratioModes;
         this.symbolBetChoiceTable = symbolBetChoiceTable;
-        this.symbolPositonsMapper = symbolPositonsMapper;
+        this.symbolPositionsMapper = symbolPositionsMapper;
         this.defaultSettlementResult = defaultSettlementResult;
     }
 }

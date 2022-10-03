@@ -145,7 +145,7 @@ export const symbolBetChoiceTable = [
     },
 ];
 
-export const symbolPositonsMapper = {
+export const symbolPositionsMapper = {
     bar: [5],
     bar25: [3],
     bar50: [4],

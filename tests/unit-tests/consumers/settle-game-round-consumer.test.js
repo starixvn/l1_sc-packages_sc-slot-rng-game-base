@@ -45,7 +45,7 @@ describe("SettleGameRoundConsumer test", () => {
 describe("calculateBetResult test", () => {
     const testCases = [
         {
-            roundResult: { symbols: ["lemon"], symbolPositons: [1], number: 6, isLucky: false },
+            roundResult: { symbols: ["lemon"], symbolPositions: [1], number: 6, isLucky: false },
             settlementResult: {
                 bar: false,
                 bar50: false,
@@ -100,7 +100,7 @@ describe("calculateBetResult test", () => {
             },
         },
         {
-            roundResult: { symbols: ["bar"], symbolPositons: [1], number: 6, isLucky: false },
+            roundResult: { symbols: ["bar"], symbolPositions: [1], number: 6, isLucky: false },
             settlementResult: {
                 bar: true,
                 bar50: false,
@@ -155,7 +155,7 @@ describe("calculateBetResult test", () => {
             },
         },
         {
-            roundResult: { symbols: ["bar50"], symbolPositons: [1], number: 6, isLucky: false },
+            roundResult: { symbols: ["bar50"], symbolPositions: [1], number: 6, isLucky: false },
             settlementResult: {
                 bar: false,
                 bar50: true,
@@ -210,7 +210,7 @@ describe("calculateBetResult test", () => {
             },
         },
         {
-            roundResult: { symbols: ["bar50", "bar"], symbolPositons: [10, 2, 3], number: 6, isLucky: true },
+            roundResult: { symbols: ["bar50", "bar"], symbolPositions: [10, 2, 3], number: 6, isLucky: true },
             settlementResult: {
                 bar: true,
                 bar50: true,
@@ -265,7 +265,7 @@ describe("calculateBetResult test", () => {
             },
         },
         {
-            roundResult: { symbols: ["bar50", "bar"], symbolPositons: [10, 2, 3], number: 6, isLucky: true },
+            roundResult: { symbols: ["bar50", "bar"], symbolPositions: [10, 2, 3], number: 6, isLucky: true },
             settlementResult: {
                 bar: true,
                 bar50: true,
@@ -320,7 +320,7 @@ describe("calculateBetResult test", () => {
             },
         },
         {
-            roundResult: { symbols: ["lemon3", "bar"], symbolPositons: [10, 2, 3], number: 6, isLucky: true },
+            roundResult: { symbols: ["lemon3", "bar"], symbolPositions: [10, 2, 3], number: 6, isLucky: true },
             settlementResult: {
                 bar: true,
                 bar50: false,

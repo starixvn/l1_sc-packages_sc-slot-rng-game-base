@@ -1,6 +1,6 @@
 import { ResultHelper } from "../../../src";
 import gameSettings from "../../integration-tests/game-service-setup/game-settings";
-import { symbolPositonsMapper } from "../../integration-tests/game-service-setup/constants";
+import { symbolPositionsMapper } from "../../integration-tests/game-service-setup/constants";
 
 const fakeSymbolResult = {
     isLucky: false,
@@ -17,7 +17,7 @@ const fakeRoundResult = {
         isLucky: fakeSymbolResult.isLucky,
         symbols: fakeSymbolResult.choices,
         bigSmall: fakeBigSmallResult,
-        symbolPositons: [5],
+        symbolPositions: [5],
     },
 };
 
@@ -39,7 +39,7 @@ jest.mock("sc-slot-rng-generator", () => {
 describe("generateResult", () => {
     it("should return correct result", async () => {
         //Act
-        const actualResult = ResultHelper.generateResult([], symbolPositonsMapper, 2, 1, 2, 1);
+        const actualResult = ResultHelper.generateResult([], symbolPositionsMapper, 2, 1, 2, 1);
 
         // Assert
         expect(actualResult).toEqual(fakeRoundResult);

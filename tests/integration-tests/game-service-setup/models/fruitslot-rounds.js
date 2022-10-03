@@ -5,6 +5,7 @@ const modelName = "fruitslot_rounds";
 const resultSchema = new mongoose.Schema(
     {
         symbols: { type: Object, require: true },
+        symbolPositions: { type: Array },
         number: { type: Number },
         isLucky: { type: Boolean, default: false },
     },

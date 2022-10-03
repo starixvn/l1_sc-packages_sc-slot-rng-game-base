@@ -2,21 +2,21 @@ import { ResultGenerator, BigSmallResultGenerator } from "sc-slot-rng-generator"
 import Chance from "chance";
 
 const luckySymbol = "lucky";
-const generateResult = (symbolBetChoiceTable, symbolPositonsMapper, ratio, extraMin, extraMax, mode = 1) => {
+const generateResult = (symbolBetChoiceTable, symbolPositionsMapper, ratio, extraMin, extraMax, mode = 1) => {
     const chance = new Chance();
     const symbolGenerator = new ResultGenerator(symbolBetChoiceTable, { ratio, extraMin, extraMax }, mode);
     const bigSmallGenerator = new BigSmallResultGenerator(mode);
     const { isLucky, choices } = symbolGenerator.generate();
 
-    const symbolPositons = choices.map((choice) => {
-        return chance.pickone(symbolPositonsMapper[choice]);
+    const symbolPositions = choices.map((choice) => {
+        return chance.pickone(symbolPositionsMapper[choice]);
     });
 
     return {
         result: {
             isLucky,
             symbols: choices,
-            symbolPositons: isLucky ? [chance.pickone(symbolPositonsMapper[luckySymbol])].concat(symbolPositons) : symbolPositons,
+            symbolPositions: isLucky ? [chance.pickone(symbolPositionsMapper[luckySymbol])].concat(symbolPositions) : symbolPositions,
             bigSmall: bigSmallGenerator.generate(),
         },
     };
