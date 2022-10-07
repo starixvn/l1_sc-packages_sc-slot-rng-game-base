@@ -18,6 +18,7 @@ gameData.exchangeRates.exId = 10;
 
 const roundsRepository = stubMongoose(mongoose.Model);
 const betsRepository = stubMongoose(mongoose.Model);
+const tempBetsRepository = stubMongoose(mongoose.Model);
 
 const roundResultPublisher = new Core.BaseEventPublishers.RoundResultPublisher(gameName, gameData);
 const userBetResultPublisher = new Core.BaseEventPublishers.UserBetResultPublisher(gameName, gameData);
@@ -33,6 +34,7 @@ beforeEach(() => {
         endGame,
         roundsRepository,
         betsRepository,
+        tempBetsRepository,
     });
 });
 

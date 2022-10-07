@@ -1,8 +1,26 @@
-import { Core } from "sc-game-base";
+import { Table } from "sc-game-base";
 
-export default class SettleGameRoundConsumer extends Core.BaseEventConsumers.SettleGameRoundConsumer {
-    constructor({ definition, gameData, roundResultPublisher, userBetResultPublisher, endGame, roundsRepository, betsRepository }) {
-        super({ definition, gameData, roundResultPublisher, userBetResultPublisher, endGame, roundsRepository, betsRepository });
+export default class SettleGameRoundConsumer extends Table.EventConsumers.TableSettleGameRoundConsumer {
+    constructor({
+        definition,
+        gameData,
+        roundResultPublisher,
+        userBetResultPublisher,
+        endGame,
+        roundsRepository,
+        betsRepository,
+        tempBetsRepository,
+    }) {
+        super({
+            definition,
+            gameData,
+            roundResultPublisher,
+            userBetResultPublisher,
+            endGame,
+            roundsRepository,
+            betsRepository,
+            tempBetsRepository,
+        });
     }
 
     calculateBetResult(settlementResult, bet, odds) {

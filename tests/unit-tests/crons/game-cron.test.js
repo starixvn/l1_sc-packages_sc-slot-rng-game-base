@@ -35,6 +35,9 @@ jest.mock("sc-game-base", () => {
                     resetForNewRound() {}
                 },
             },
+            EventConsumers: {
+                TableSettleGameRoundConsumer: class BaseClass {},
+            },
         },
     };
 });
