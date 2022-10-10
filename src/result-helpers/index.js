@@ -2,9 +2,9 @@ import { ResultGenerator, BigSmallResultGenerator } from "sc-slot-rng-generator"
 import Chance from "chance";
 
 const luckySymbol = "lucky";
-const generateResult = (symbolBetChoiceTable, symbolPositionsMapper, ratio, extraMin, extraMax, mode = 1) => {
+const generateResult = (symbolBetChoiceTable, symbolPositionsMapper, ratio, min, max, mode = 1) => {
     const chance = new Chance();
-    const symbolGenerator = new ResultGenerator(symbolBetChoiceTable, { ratio, extraMin, extraMax }, mode);
+    const symbolGenerator = new ResultGenerator(symbolBetChoiceTable, { ratio, min, max }, mode);
     const bigSmallGenerator = new BigSmallResultGenerator(mode);
     const { isLucky, choices } = symbolGenerator.generate();
 

@@ -21,7 +21,7 @@ export const choiceNames = {
     small: "small",
 };
 
-export const hedgeBetGroups = [choiceNames.big, choiceNames.small];
+export const hedgeBetGroups = [[choiceNames.big, choiceNames.small]];
 
 export const symbolBetChoiceTable = [
     {

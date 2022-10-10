@@ -28,7 +28,7 @@ export default class SettleGameRoundConsumer extends Table.EventConsumers.TableS
         const mainChoices = symbolBetChoiceTable
             .filter((choice) => choice.relatedChoices?.length > 0)
             .concat(
-                hedgeBetGroups.map((choice) => {
+                hedgeBetGroups[0].map((choice) => {
                     return { name: choice };
                 })
             );
