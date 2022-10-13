@@ -85,7 +85,7 @@ const gameConfig = {
 
 const rounds = [
     {
-        id: 1190117,
+        id: 1190119,
         result: { symbols: ["lemonx3"], number: 8, isLucky: false, symbolPositions: [2] },
         settlementResult: {
             bar: true,
@@ -111,7 +111,7 @@ const rounds = [
         },
     },
     {
-        id: 1190118,
+        id: 1190120,
         result: { symbols: ["lemonx3", "cherryx3"], number: 4, isLucky: true, symbolPositions: [12, 2, 3] },
         settlementResult: {
             bar: false,
@@ -218,6 +218,24 @@ const userBetLogsData = (uid) => {
             currency: "$US",
             choice: "star",
             subChoices: ["star3"],
+            amount: 150,
+            memberId: 4,
+            name: "NormalUser",
+            odds: gameConfig.odds,
+            partnerId: "dummy-partner-id",
+            siteId: "111",
+            thanhtoan: true,
+            rate: 1,
+        },
+        {
+            roundId: 1190120,
+            phien: 1190120,
+            uid: uid,
+            betwin: 0,
+            currency: "$US",
+            choice: "bar",
+            subChoices: ["bar25,bar50"],
+            amount: 50,
             memberId: 4,
             name: "NormalUser",
             odds: gameConfig.odds,

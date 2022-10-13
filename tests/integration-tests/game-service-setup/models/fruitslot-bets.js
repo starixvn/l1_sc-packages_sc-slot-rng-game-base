@@ -45,6 +45,7 @@ const betLogsSchema = {
     uid: { type: String, required: true },
     name: { type: String, required: true },
     roundId: { type: Number, required: true },
+    phien: { type: Number, required: true },
 
     amount: { type: Number, default: 0 },
     choice: { type: String },
