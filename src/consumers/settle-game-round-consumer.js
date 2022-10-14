@@ -78,8 +78,7 @@ export default class SettleGameRoundConsumer extends Table.EventConsumers.TableS
                 ? settlementResultFromAdmin
                 : generateResult(symbolBetChoiceTable, symbolPositionsMapper, ratioModes[mode], luckySpinFrom, luckySpinTo, randomMode);
 
-        const numberOfSymbols = result.symbols.length;
-        this.gameData.numberOfLuckyRounds = numberOfSymbols === 1 ? 0 : numberOfSymbols - 1;
+        this.gameData.numberOfLuckyRounds = result.isLucky ? result.symbols.length : 0;
 
         return result;
     }

@@ -2,7 +2,7 @@ import { Table } from "sc-game-base";
 
 export default class GameCron extends Table.Crons.TableGameCron {
     async proceed() {
-        const { durations, luckySymbolAnimationTime, luckyRoundDuration } = this.definition;
+        const { durations, luckyRoundDuration } = this.definition;
         const { wholeRound, placingBets } = durations;
         const { remainingTime, disabled, ischeckGameStatus } = this.gameData;
 
@@ -24,7 +24,7 @@ export default class GameCron extends Table.Crons.TableGameCron {
             this.gameData.ischeckGameStatus = false;
             const result = await this.settleGameRoundConsumer.generateResult();
             const { numberOfLuckyRounds } = this.gameData;
-            const extendedLuckyTime = numberOfLuckyRounds > 0 ? luckySymbolAnimationTime + numberOfLuckyRounds * luckyRoundDuration : 0;
+            const extendedLuckyTime = numberOfLuckyRounds > 0 ? numberOfLuckyRounds * luckyRoundDuration : 0;
             this.gameData.remainingTime = wholeRound + extendedLuckyTime;
             await this.settleGameRoundConsumer.settleRound(result);
         } else if (remainingTime < placingBets) {

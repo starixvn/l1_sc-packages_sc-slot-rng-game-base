@@ -11,8 +11,7 @@ export default class GameDefinition extends Core.GameDefinition {
             hedgeBetGroups = [],
             numberOfRoundHistory = 100,
             historyPageSize = 8,
-            luckySymbolAnimationTime = 2,
-            luckyRoundDuration = 2,
+            luckyRoundDuration = 4,
             ratioModes = {},
             symbolBetChoiceTable = [],
             symbolPositionsMapper = {},
@@ -26,7 +25,6 @@ export default class GameDefinition extends Core.GameDefinition {
             generateResult,
             settle
         );
-        this.luckySymbolAnimationTime = luckySymbolAnimationTime;
         this.luckyRoundDuration = luckyRoundDuration;
         this.ratioModes = ratioModes;
         this.symbolBetChoiceTable = symbolBetChoiceTable;

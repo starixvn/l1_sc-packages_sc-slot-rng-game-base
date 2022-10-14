@@ -57,8 +57,7 @@ describe("proceed", () => {
             gameCron = buildGameCon(
                 gameCron,
                 {
-                    luckyRoundDuration: 2,
-                    luckySymbolAnimationTime: 2,
+                    luckyRoundDuration: 4,
                     durations: {
                         wholeRound: 42,
                         placingBets: 30,
@@ -86,8 +85,7 @@ describe("proceed", () => {
             gameCron = buildGameCon(
                 gameCron,
                 {
-                    luckyRoundDuration: 2,
-                    luckySymbolAnimationTime: 2,
+                    luckyRoundDuration: 4,
                     durations: {
                         placingBets: 5,
                         wholeRound: 8,
@@ -125,8 +123,7 @@ describe("proceed", () => {
             gameCron = buildGameCon(
                 gameCron,
                 {
-                    luckyRoundDuration: 2,
-                    luckySymbolAnimationTime: 2,
+                    luckyRoundDuration: 4,
                     durations: {
                         placingBets: 5,
                         wholeRound: 8,
@@ -150,7 +147,7 @@ describe("proceed", () => {
 
         it("should plus extra time in lucky case ", async () => {
             // Assert
-            expect(gameCron.gameData.remainingTime).toBe(14);
+            expect(gameCron.gameData.remainingTime).toBe(16);
         });
     });
 
@@ -160,8 +157,7 @@ describe("proceed", () => {
             gameCron = buildGameCon(
                 gameCron,
                 {
-                    luckyRoundDuration: 2,
-                    luckySymbolAnimationTime: 2,
+                    luckyRoundDuration: 4,
                     durations: {
                         placingBets: 5,
                         wholeRound: 8,
