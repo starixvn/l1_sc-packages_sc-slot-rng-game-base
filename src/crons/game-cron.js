@@ -4,30 +4,30 @@ export default class GameCron extends Table.Crons.TableGameCron {
     async proceed() {
         const { durations, luckyRoundDuration } = this.definition;
         const { wholeRound, placingBets } = durations;
-        const { remainingTime, disabled, ischeckGameStatus } = this.gameData;
+        const { ischeckGameStatus } = this.gameData;
 
-        if (!ischeckGameStatus && remainingTime >= wholeRound) {
-            this.gameData.ischeckGameStatus = true;
+        if (!ischeckGameStatus && this.gameData.remainingTime >= wholeRound) {
             await this.checkGameStatus();
+            !this.gameData.disabled && (this.gameData.ischeckGameStatus = true);
         }
 
-        if (!disabled) {
+        if (!this.gameData.disabled) {
             this.gameData.remainingTime--;
         }
 
-        if (this.isStartingTime(remainingTime, durations)) {
+        if (this.isStartingTime(this.gameData.remainingTime, durations)) {
             this.resetForNewRound();
             this.bot && (await this.bot.reset());
         }
 
-        if (remainingTime < 0) {
+        if (this.gameData.remainingTime < 0) {
             this.gameData.ischeckGameStatus = false;
             const result = await this.settleGameRoundConsumer.generateResult();
             const { numberOfLuckyRounds } = this.gameData;
             const extendedLuckyTime = numberOfLuckyRounds > 0 ? numberOfLuckyRounds * luckyRoundDuration : 0;
             this.gameData.remainingTime = wholeRound + extendedLuckyTime;
             await this.settleGameRoundConsumer.settleRound(result);
-        } else if (remainingTime < placingBets) {
+        } else if (this.gameData.remainingTime < placingBets) {
             this.bot && (await this.bot.run());
             this.runningRoundInfoPublisher.publish();
         }

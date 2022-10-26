@@ -51,31 +51,119 @@ describe("proceed", () => {
         gameCron = new Crons.GameCron();
     });
 
-    describe("when isNewRound", () => {
-        it("should checkGameStatus", async () => {
-            //Arrange
-            gameCron = buildGameCon(
-                gameCron,
-                {
-                    luckyRoundDuration: 4,
-                    durations: {
-                        wholeRound: 42,
-                        placingBets: 30,
+    describe("when remainingTime >= wholeRound", () => {
+        describe("when ischeckGameStatus true", () => {
+            it("should not call checkGameStatus", async () => {
+                // arrange
+                gameCron = buildGameCon(
+                    gameCron,
+                    {
+                        luckyRoundDuration: 4,
+                        durations: {
+                            wholeRound: 42,
+                            placingBets: 30,
+                        },
                     },
-                },
-                {
-                    remainingTime: 42,
-                    disabled: true,
-                }
-            );
+                    {
+                        remainingTime: 42,
+                        disabled: true,
+                        ischeckGameStatus: true,
+                    }
+                );
+                gameCron.isStartingTime = jest.fn(() => true);
 
-            gameCron.isStartingTime = jest.fn(() => true);
+                // Act
+                await gameCron.proceed();
 
-            // Act
-            await gameCron.proceed();
+                // Assert
+                expect(gameCron.checkGameStatus).not.toHaveBeenCalled();
+            });
+        });
 
-            // Assert
-            expect(gameCron.checkGameStatus).toHaveBeenCalled();
+        describe("when ischeckGameStatus false", () => {
+            it("should call checkGameStatus", async () => {
+                // arrange
+                gameCron = buildGameCon(
+                    gameCron,
+                    {
+                        luckyRoundDuration: 4,
+                        durations: {
+                            wholeRound: 42,
+                            placingBets: 30,
+                        },
+                    },
+                    {
+                        remainingTime: 42,
+                        disabled: true,
+                        ischeckGameStatus: false,
+                    }
+                );
+                gameCron.isStartingTime = jest.fn(() => true);
+
+                // Act
+                await gameCron.proceed();
+
+                // Assert
+                expect(gameCron.checkGameStatus).toHaveBeenCalled();
+            });
+
+            it("should not set ischeckGameStatus when game is disable", async () => {
+                // arrange
+                gameCron = buildGameCon(
+                    gameCron,
+                    {
+                        luckyRoundDuration: 4,
+                        durations: {
+                            wholeRound: 42,
+                            placingBets: 30,
+                        },
+                    },
+                    {
+                        remainingTime: 42,
+                        disabled: true,
+                        ischeckGameStatus: false,
+                    }
+                );
+                gameCron.isStartingTime = jest.fn(() => true);
+                gameCron.checkGameStatus = jest.fn(() => {
+                    gameCron.gameData.disabled = true;
+                });
+
+                // Act
+                await gameCron.proceed();
+
+                // Assert
+                expect(gameCron.gameData.ischeckGameStatus).toBeFalse();
+            });
+
+            it("should set ischeckGameStatus true when game is enable", async () => {
+                // arrange
+                gameCron = buildGameCon(
+                    gameCron,
+                    {
+                        luckyRoundDuration: 4,
+                        durations: {
+                            wholeRound: 42,
+                            placingBets: 30,
+                        },
+                    },
+                    {
+                        remainingTime: 42,
+                        disabled: true,
+                        ischeckGameStatus: false,
+                    }
+                );
+                gameCron.isStartingTime = jest.fn(() => true);
+                gameCron.checkGameStatus = jest.fn(() => {
+                    gameCron.gameData.disabled = false;
+                });
+
+                // Act
+                await gameCron.proceed();
+
+                // Assert
+                expect(gameCron.gameData.ischeckGameStatus).toBeTrue();
+            });
         });
     });
 
