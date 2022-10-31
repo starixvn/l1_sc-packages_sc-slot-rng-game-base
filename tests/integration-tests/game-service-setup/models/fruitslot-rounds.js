@@ -4,9 +4,9 @@ const modelName = "fruitslot_rounds";
 
 const resultSchema = new mongoose.Schema(
     {
-        symbols: { type: Object, require: true },
+        symbols: { type: Object, required: true },
         symbolPositions: { type: Array },
-        number: { type: Number },
+        number: { type: Number, required: true },
         isLucky: { type: Boolean, default: false },
     },
     { _id: false }
@@ -39,11 +39,11 @@ const settlementResultSchema = new mongoose.Schema(
 );
 
 const Schema = new mongoose.Schema({
-    id: { type: Number, require: true },
+    id: { type: Number, required: true },
     result: resultSchema,
     settlementResult: settlementResultSchema,
     time: { type: Date, default: new Date() },
-    exchangeRateId: { type: Number, require: true },
+    exchangeRateId: { type: Number, required: true },
 });
 
 export default mongoose.model(modelName, Schema);

@@ -4,7 +4,6 @@ const temptBetSchema = {
     uid: { type: String, required: true },
     name: { type: String, required: true },
     roundId: { type: Number, required: true },
-    phien: { type: Number, required: true },
 
     bar: { type: Number, default: 0 },
     tripleSeven: { type: Number, default: 0 },
@@ -23,21 +22,18 @@ const temptBetSchema = {
     betwin: { type: Number, default: 0 },
     time: { type: Date },
     odds: { type: Object },
-
-    memberId: { type: Number },
-    playerId: { type: Number },
-    siteId: { type: String },
-    freeBet: { type: Boolean, default: false },
 };
 
 const fruitSlotBets = mongoose.model(
     "fruitslot_bets",
     new mongoose.Schema({
         ...temptBetSchema,
-        currency: { type: String, require: true },
-        rate: { type: Number, require: true },
-        operatorId: { type: String, require: true },
-        partnerId: { type: String, require: true },
+        currency: { type: String, required: true },
+        rate: { type: Number, required: true },
+        operatorId: { type: String, required: true },
+        playerId: { type: Number, required: true },
+        siteId: { type: String, required: true },
+        freeBet: { type: Boolean, default: false },
     })
 );
 
@@ -45,23 +41,22 @@ const betLogsSchema = {
     uid: { type: String, required: true },
     name: { type: String, required: true },
     roundId: { type: Number, required: true },
-    phien: { type: Number, required: true },
 
-    amount: { type: Number, default: 0 },
-    choice: { type: String },
-    subChoices: { type: Array },
+    amount: { type: Number, default: 0, required: true },
+    choice: { type: String, required: true },
+    subChoices: { type: Array, required: true },
     time: { type: Date },
     clientSentTime: { type: Date },
     receivedTime: { type: Date },
     odds: { type: Object },
 
-    playerId: { type: Number },
-    operatorId: { type: String, require: true },
-    siteId: { type: String },
+    playerId: { type: Number, required: true },
+    operatorId: { type: String, required: true },
+    siteId: { type: String, required: true },
     freeBet: { type: Boolean, default: false },
 };
 
-const fruitSlotTemptBets = mongoose.model("fruitslot_tempbets", new mongoose.Schema(temptBetSchema));
+const fruitSlotTemptBets = mongoose.model("fruitslot_tmpbets", new mongoose.Schema(temptBetSchema));
 const fruitSlotBetLogs = mongoose.model("fruitslot_betlogs", betLogsSchema);
 
 export { fruitSlotTemptBets, fruitSlotBets, fruitSlotBetLogs };

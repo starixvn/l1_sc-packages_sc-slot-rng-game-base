@@ -7,7 +7,6 @@ export default class ProcessBetQueue extends Table.Crons.TableProcessBetQueue {
         const newBetLog = {
             uid: player.UID,
             name: player.profile.name,
-            phien: roundId,
             time: new Date(),
             choice: bet.betChoice,
             subChoices,
