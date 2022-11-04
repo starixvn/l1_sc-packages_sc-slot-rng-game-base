@@ -18,14 +18,11 @@ export default class ProcessBetQueue extends Table.Crons.TableProcessBetQueue {
         };
 
         if (player.session) {
-            newBetLog.memberId = player.session.memberId;
             newBetLog.siteId = player.session.siteId;
-            newBetLog.partnerId = player.session.partnerId;
             newBetLog.currency = player.session.currencyName;
             newBetLog.rate = rate;
-
-            newBetLog.operatorId = player.session.partnerId;
-            newBetLog.playerId = player.session.memberId;
+            newBetLog.operatorId = player.session.operatorId;
+            newBetLog.playerId = player.session.playerId;
         }
 
         await this.betLogsRepository.create(newBetLog);

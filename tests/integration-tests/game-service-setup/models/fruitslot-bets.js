@@ -21,7 +21,7 @@ const temptBetSchema = {
     paid: { type: Boolean, default: false },
     betwin: { type: Number, default: 0 },
     time: { type: Date },
-    odds: { type: Object },
+    odds: { type: Object, required: true },
 };
 
 const fruitSlotBets = mongoose.model(
@@ -48,12 +48,11 @@ const betLogsSchema = {
     time: { type: Date },
     clientSentTime: { type: Date },
     receivedTime: { type: Date },
-    odds: { type: Object },
 
     playerId: { type: Number, required: true },
     operatorId: { type: String, required: true },
     siteId: { type: String, required: true },
-    freeBet: { type: Boolean, default: false },
+    freeBet: { type: Boolean },
 };
 
 const fruitSlotTemptBets = mongoose.model("fruitslot_tmpbets", new mongoose.Schema(temptBetSchema));
