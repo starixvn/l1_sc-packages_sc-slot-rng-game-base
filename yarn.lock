@@ -7958,10 +7958,10 @@ sc-base-apis@1.18.0:
     sc-base-database "1.10.1"
     sc-common "1.8.1"
 
-sc-base-database@1.10.1, sc-base-database@1.11.1-beta.0:
-  version "1.11.1-beta.0"
-  resolved "http://npm.lumigame.com/sc-base-database/-/sc-base-database-1.11.1-beta.0.tgz#c674e1e60adb656972b719b59e24d8f495a922c2"
-  integrity sha512-J2t/pPEIKrPJQS+ZtbgUSSVRejgDp32HIeku2WGZhD48dZ+10rq3Aw4DW8Kg+Jv52YdCcWQ0A74b0ewVJLlsXg==
+sc-base-database@1.10.1, sc-base-database@1.11.0:
+  version "1.11.0"
+  resolved "http://npm.lumigame.com/sc-base-database/-/sc-base-database-1.11.0.tgz#37bd7c9ba5e7fe6d63004eab235a421b44efa3b8"
+  integrity sha512-DY1vnIg26C6xzXokxEx2pX2DcaZvJQzxM9cxU3aIvp3Kx8b+TAfn39uRTNujmzDUbuqvuRly/tS9amEWOng8fg==
   dependencies:
     mongoose "^5.9.25"
     sc-common "1.8.1"
@@ -7977,10 +7977,10 @@ sc-common@1.8.1:
     mongoose-long "^0.3.0"
     numeral "^2.0.6"
 
-sc-game-base@3.2.3, sc-game-base@3.2.4-beta.0:
-  version "3.2.4-beta.0"
-  resolved "http://npm.lumigame.com/sc-game-base/-/sc-game-base-3.2.4-beta.0.tgz#890882c14b91fd5c995896ca2e33acf3fa384ea5"
-  integrity sha512-umauftYjLE79Us6SWSm68ojWbnuxaEW+vGWlCV2eqalYuwPr1897uIpEGId6Qe6SbL21G77DLepwG6N/rAJFAQ==
+sc-game-base@3.2.3, sc-game-base@3.2.5:
+  version "3.2.5"
+  resolved "http://npm.lumigame.com/sc-game-base/-/sc-game-base-3.2.5.tgz#ad86b6aade88cd1ffd8327ff9393be25b06ea45a"
+  integrity sha512-xwX4yC4+/ZA/1S3MdViMMSkD6q1Kg31L/fGCuR6nzuOTxkxx5xqIg7rwfRT1m4eCqgnGoLoAQTAdQs8DCLf3dA==
   dependencies:
     awilix "^4.3.1"
     axios "^0.20.0"
@@ -8016,10 +8016,10 @@ sc-semantic-release@^1.2.0:
   resolved "http://npm.lumigame.com/sc-semantic-release/-/sc-semantic-release-1.2.0.tgz#52ea7bd1aa4d5c41315a16c2c4e4f0437befdbcb"
   integrity sha512-izZqZiS8hL05cGzYbcR3+GZ1Oktr9rU1nIL05S9mZnEBm5nZfqzRkSpR2OHVJARjYsMI5dps0oUX1HjFV9x47w==
 
-sc-slot-rng-generator@1.0.1-beta.7:
-  version "1.0.1-beta.7"
-  resolved "http://npm.lumigame.com/sc-slot-rng-generator/-/sc-slot-rng-generator-1.0.1-beta.7.tgz#c9fe87d9d6dee177ce2869152f53b02b4cb381cf"
-  integrity sha512-8QbIsrBa479JgV+2Wjzbk4gQ4rdCy4hCgF/PEfbfiEonYwLNTNkEz8CW5lMiVRLhyyVb5TkDBtF1QQwT9z4zIA==
+sc-slot-rng-generator@1.0.1:
+  version "1.0.1"
+  resolved "http://npm.lumigame.com/sc-slot-rng-generator/-/sc-slot-rng-generator-1.0.1.tgz#7e7b233ef56511ac215046d022237d82a7ca5c6a"
+  integrity sha512-B27YBwe+EEOPEJG6CIQ709WNxSXEgU8wU9bSaKH5RBKwonkjMZH9PVvs5NlNtXtXaR8zeKCfl3pgZawoJaGJOg==
   dependencies:
     chance "^1.1.7"
     ramda "^0.28.0"

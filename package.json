@@ -1,6 +1,6 @@
 {
     "name": "sc-slot-rng-game-base",
-    "version": "1.0.0-beta.28",
+    "version": "1.0.0",
     "description": "",
     "main": "./src/index.js",
     "scripts": {
@@ -56,12 +56,12 @@
     },
     "dependencies": {
         "chance": "^1.1.7",
-        "sc-game-base": "3.2.4-beta.0",
-        "sc-slot-rng-generator": "1.0.1-beta.7"
+        "sc-game-base": "3.2.5",
+        "sc-slot-rng-generator": "1.0.1"
     },
     "resolutions": {
-        "sc-game-base": "3.2.4-beta.0",
-        "sc-base-database": "1.11.1-beta.0"
+        "sc-game-base": "3.2.5",
+        "sc-base-database": "1.11.0"
     },
     "husky": {
         "hooks": {
