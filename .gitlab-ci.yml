@@ -1,7 +1,11 @@
+variables:
+    PROJECT_NAME: sc-slot-rng-game-base
+
 stages:
     - test
     - post-test
     - publish
+
 include:
     - project: "ci/common-ci"
       ref: master
@@ -12,3 +16,9 @@ include:
     - project: "ci/common-ci"
       ref: master
       file: "npm/publish-npm.gitlab-ci.yml"
+
+unit-test-js:
+  artifacts:
+    reports:
+      junit: coverage/*.xml
+      cobertura: coverage/cobertura-coverage.xml
