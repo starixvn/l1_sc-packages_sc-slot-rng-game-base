@@ -8016,12 +8016,13 @@ sc-semantic-release@^1.2.0:
   resolved "http://npm.lumigame.com/sc-semantic-release/-/sc-semantic-release-1.2.0.tgz#52ea7bd1aa4d5c41315a16c2c4e4f0437befdbcb"
   integrity sha512-izZqZiS8hL05cGzYbcR3+GZ1Oktr9rU1nIL05S9mZnEBm5nZfqzRkSpR2OHVJARjYsMI5dps0oUX1HjFV9x47w==
 
-sc-slot-rng-generator@1.0.1:
-  version "1.0.1"
-  resolved "http://npm.lumigame.com/sc-slot-rng-generator/-/sc-slot-rng-generator-1.0.1.tgz#7e7b233ef56511ac215046d022237d82a7ca5c6a"
-  integrity sha512-B27YBwe+EEOPEJG6CIQ709WNxSXEgU8wU9bSaKH5RBKwonkjMZH9PVvs5NlNtXtXaR8zeKCfl3pgZawoJaGJOg==
+sc-slot-rng-generator@1.0.4:
+  version "1.0.4"
+  resolved "http://npm.lumigame.com/sc-slot-rng-generator/-/sc-slot-rng-generator-1.0.4.tgz#b3ef79152d13195e47e7e13e8b3821244a2a9e87"
+  integrity sha512-egDNlLC+oSh6iKxG41mJ75DlOqpAbxYph0Juv0cTpRANlm0AA0BFLmLoD4CRsdBsZs3Qy48GmyYQVf1Yg5oxOA==
   dependencies:
     chance "^1.1.7"
+    lodash "^4.17.21"
     ramda "^0.28.0"
     random "^3.0.6"
     random-js "^2.1.0"

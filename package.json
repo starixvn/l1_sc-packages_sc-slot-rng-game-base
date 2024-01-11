@@ -1,6 +1,6 @@
 {
     "name": "sc-slot-rng-game-base",
-    "version": "1.0.2",
+    "version": "1.0.3-beta.1",
     "description": "",
     "main": "./src/index.js",
     "scripts": {
@@ -15,10 +15,6 @@
         "pub": "npm publish --registry https://npm.lumigame.com",
         "pubbeta": "npm publish --registry https://npm.lumigame.com --tag beta",
         "semantic-release": "semantic-release"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://git3.nexdev.net/l1/sc-packages/sc-slot-rng-game-base.git"
     },
     "jestSonar": {
         "reportPath": "reports",
@@ -57,7 +53,7 @@
     "dependencies": {
         "chance": "^1.1.7",
         "sc-game-base": "3.2.5",
-        "sc-slot-rng-generator": "1.0.1"
+        "sc-slot-rng-generator": "1.0.4"
     },
     "resolutions": {
         "sc-game-base": "3.2.5",
