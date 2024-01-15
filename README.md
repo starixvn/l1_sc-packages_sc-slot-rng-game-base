@@ -1,2 +1,1 @@
-# sc-fruit-slot-base
-
+# sc-slot-rng-base
