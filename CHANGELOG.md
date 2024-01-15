@@ -1,3 +1,10 @@
+## [1.0.4](https://git3.nexdev.net/l1/sc-packages/sc-slot-rng-game-base/compare/v1.0.3...v1.0.4) (2024-01-15)
+
+
+### Bug Fixes
+
+* upgrade version ([8381622](https://git3.nexdev.net/l1/sc-packages/sc-slot-rng-game-base/commit/83816222bfaff53c67147a32acd05e1252c390ea))
+
 # 1.0.0 (2024-01-15)
 
 
