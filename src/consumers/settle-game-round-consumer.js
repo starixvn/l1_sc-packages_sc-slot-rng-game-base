@@ -104,6 +104,7 @@ export default class SettleGameRoundConsumer extends Table.EventConsumers.TableS
         });
 
         if (newRound) {
+            this.roundResultPublisher.publishRoundResult(this.collectRoundResult(result, settlementResult, roundId));
             const finish = {
                 settlementResult,
                 result,
@@ -114,6 +115,8 @@ export default class SettleGameRoundConsumer extends Table.EventConsumers.TableS
             this.gameData.roundId = finish.roundId + 1;
 
             await this.settleBets(finish);
+
+            this.roundResultPublisher.publishWinners(roundId, this.gameData.winningPlayers);
         }
     }
 
